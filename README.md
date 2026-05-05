@@ -25,7 +25,7 @@ PhishGuard is a phishing detection system that analyzes URLs using machine learn
 ##  Setup
 
 ```bash id="p0k3x1"
-git clone https://github.com/your-username/PhishGuard.git
+git clone https://fida-ur-rahman.github.io/PhishGuard-Phishing-Detection-System/
 cd PhishGuard
 pip install -r requirements.txt
 python app.py
