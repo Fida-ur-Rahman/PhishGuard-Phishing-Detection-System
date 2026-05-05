@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard — Phishing Detection System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./project.css">
+</head>
+<body>
+    <!-- ═══ TOP NAV ═══ -->
+<nav id="nav">
+  <div class="logo">
+    <div class="logo-icon">🛡</div>
+    Phish<em>Guard</em>
+  </div>
+  <div class="nav-divider"></div>
+  <button class="ntab active" data-page="dashboard">📊 <span>Dashboard</span></button>
+  <button class="ntab" data-page="scanner">🔍 <span>Scanner</span></button>
+  <button class="ntab" data-page="history">📋 <span>History</span></button>
+  <button class="ntab" data-page="alerts">🚨 <span>Alerts</span> <span class="nbadge" id="alert-badge">5</span></button>
+  <button class="ntab" data-page="intel">🕵 <span>Threat Intel</span></button>
+  <button class="ntab" data-page="settings">⚙ <span>Settings</span></button>
+  <div class="nav-right">
+    <div class="live-pill"><div class="pulse"></div>LIVE</div>
+    <div class="avatar">AD</div>
+  </div>
+</nav>
+ 
+<div id="layout">
+ 
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside id="sidebar">
+    <div class="s-label">Navigation</div>
+    <button class="slink active" data-page="dashboard"><span class="si">📊</span>Dashboard</button>
+    <button class="slink" data-page="scanner"><span class="si">🔍</span>URL Scanner</button>
+    <button class="slink" data-page="history"><span class="si">📋</span>Scan History</button>
+    <button class="slink" data-page="alerts"><span class="si">🚨</span>Alerts<span class="badge" id="sidebar-badge">5</span></button>
+    <button class="slink" data-page="intel"><span class="si">🕵</span>Threat Intel</button>
+    <div class="s-label">Admin</div>
+    <button class="slink" data-page="settings"><span class="si">⚙</span>Settings</button>
+    <button class="slink"><span class="si">👥</span>Team Members</button>
+    <button class="slink"><span class="si">📤</span>Export Report</button>
+    <div class="sidebar-foot">
+      <p><strong>Engine v3.4.1</strong><br>Signatures: 2.1M+<br>Updated: 2 min ago<br>Uptime: 99.97%</p>
+    </div>
+  </aside>
+ 
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main id="main">
+ 
+    <!-- ━━━ DASHBOARD ━━━ -->
+    <section id="page-dashboard" class="page active">
+      <div class="phead">
+        <div><h1>Security Dashboard</h1><p>Real-time phishing detection overview · Updated just now</p></div>
+        <div class="pills">
+          <button class="pill active">24h</button>
+          <button class="pill">7d</button>
+          <button class="pill">30d</button>
+        </div>
+      </div>
+ 
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-num" style="color:var(--text)">4,821</div><div class="stat-lbl">Total Scans</div><div class="stat-delta delta-up">↑ 12% from yesterday</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--red)">347</div><div class="stat-lbl">Phishing Detected</div><div class="stat-delta delta-up">↑ 8% from yesterday</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--orange)">128</div><div class="stat-lbl">Suspicious URLs</div><div class="stat-delta delta-dn">↓ 3% from yesterday</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--green)">4,346</div><div class="stat-lbl">Safe URLs</div><div class="stat-delta delta-dn">↓ 2% from yesterday</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--blue)">99.2%</div><div class="stat-lbl">Detection Rate</div><div class="stat-delta delta-flat">— unchanged</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--purple)">0.4s</div><div class="stat-lbl">Avg Scan Time</div><div class="stat-delta delta-dn">↓ improved</div></div>
+      </div>
+ 
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Detections — Last 7 Days</div>
+            <div class="chart-legend">
+              <span><span class="ldot" style="background:var(--red)"></span>Phishing</span>
+              <span><span class="ldot" style="background:var(--orange)"></span>Suspicious</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="bar-chart" id="bar-chart"></div>
+            <div class="bar-labels" id="bar-labels"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Risk Distribution</div></div>
+          <div class="card-body">
+            <div class="donut-row">
+              <svg width="96" height="96" viewBox="0 0 96 96" style="flex-shrink:0">
+                <circle cx="48" cy="48" r="34" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="15"/>
+                <circle cx="48" cy="48" r="34" fill="none" stroke="var(--red)"    stroke-width="15" stroke-dasharray="15.3 198" stroke-dashoffset="54"  stroke-linecap="butt"/>
+                <circle cx="48" cy="48" r="34" fill="none" stroke="var(--orange)" stroke-width="15" stroke-dasharray="5.7 208"  stroke-dashoffset="39"  stroke-linecap="butt"/>
+                <circle cx="48" cy="48" r="34" fill="none" stroke="var(--green)"  stroke-width="15" stroke-dasharray="192 21"   stroke-dashoffset="33"  stroke-linecap="butt"/>
+                <text x="48" y="44" text-anchor="middle" fill="var(--text)"  font-size="13" font-family="Inter" font-weight="700">7.2%</text>
+                <text x="48" y="57" text-anchor="middle" fill="var(--dim)"   font-size="8.5" font-family="Inter">phishing</text>
+              </svg>
+              <div class="donut-legend">
+                <div class="dl"><div class="dl-sq" style="background:var(--red)"></div>Phishing<span class="dl-val">347 · 7.2%</span></div>
+                <div class="dl"><div class="dl-sq" style="background:var(--orange)"></div>Suspicious<span class="dl-val">128 · 2.7%</span></div>
+                <div class="dl"><div class="dl-sq" style="background:var(--green)"></div>Safe<span class="dl-val">4,346 · 90%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Recent Threats</div>
+          <input class="search" placeholder="Search URLs…" oninput="dashFilter(this.value)">
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>URL</th><th>Risk</th><th>Score</th><th>Category</th><th>Time</th><th>Action</th></tr></thead>
+            <tbody id="dash-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ━━━ SCANNER ━━━ -->
+    <section id="page-scanner" class="page">
+      <div class="phead">
+        <div><h1>URL Scanner</h1><p>Analyse any URL for phishing indicators using heuristic + ML engine</p></div>
+      </div>
+ 
+      <div class="scan-card">
+        <div class="scan-hint">Enter URL to Analyse</div>
+        <div class="url-row">
+          <input class="url-inp" id="url-inp" type="text" placeholder="https://example.com/suspicious-page" autocomplete="off" spellcheck="false">
+          <button class="btn-primary" id="scan-btn" onclick="doScan()">🔍 Scan URL</button>
+        </div>
+        <p style="font-size:11px;color:var(--dim);margin-top:8px">Press <kbd style="background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;font-size:10px">Enter</kbd> to scan · Results generated by simulated detection engine</p>
+ 
+        <div id="scan-anim">
+          <div class="spin"></div>
+          <div class="scan-status-text" id="scan-step">Initialising…</div>
+          <div class="scan-prog"><div class="scan-prog-fill" id="scan-prog-fill"></div></div>
+        </div>
+ 
+        <div id="result-wrap"></div>
+      </div>
+ 
+      <div class="card">
+        <div class="card-body" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="font-size:24px">📂</div>
+          <div style="flex:1;min-width:170px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:3px">Bulk URL Scanning</div>
+            <div style="font-size:12px;color:var(--muted)">Upload a CSV to scan thousands of URLs simultaneously with parallel analysis.</div>
+          </div>
+          <button class="btn-primary" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text)">Upload CSV</button>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ━━━ HISTORY ━━━ -->
+    <section id="page-history" class="page">
+      <div class="phead">
+        <div><h1>Scan History</h1><p>Complete audit log of all URL scans and analyst actions</p></div>
+        <div class="pills" id="hist-pills">
+          <button class="pill active" onclick="setHistFilter('all',this)">All</button>
+          <button class="pill" onclick="setHistFilter('high',this)">High Risk</button>
+          <button class="pill" onclick="setHistFilter('medium',this)">Medium</button>
+          <button class="pill" onclick="setHistFilter('low',this)">Low</button>
+          <button class="pill" onclick="setHistFilter('clean',this)">Clean</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">All Scans <span id="hist-count" style="font-size:11px;color:var(--dim);font-weight:400"></span></div>
+          <input class="search" placeholder="Search history…" oninput="histFilter2(this.value)">
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>URL</th><th>Risk</th><th>Score</th><th>Signals</th><th>Category</th><th>Analyst</th><th>Time</th><th></th></tr></thead>
+            <tbody id="hist-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ━━━ ALERTS ━━━ -->
+    <section id="page-alerts" class="page">
+      <div class="phead">
+        <div><h1>Security Alerts</h1><p>Active notifications requiring analyst attention</p></div>
+        <div class="pills">
+          <button class="pill active">All</button>
+          <button class="pill">Critical</button>
+          <button class="pill">Warning</button>
+          <button class="pill">Info</button>
+        </div>
+      </div>
+      <div class="alert-list" id="alert-list"></div>
+    </section>
+ 
+    <!-- ━━━ THREAT INTEL ━━━ -->
+    <section id="page-intel" class="page">
+      <div class="phead">
+        <div><h1>Threat Intelligence</h1><p>IOCs, attack patterns, and known phishing infrastructure</p></div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><div class="stat-num" style="color:var(--red)">12.4K</div><div class="stat-lbl">Phishing Domains</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--orange)">3,821</div><div class="stat-lbl">Malicious IPs</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--purple)">847</div><div class="stat-lbl">C2 Servers</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--blue)">2.1M</div><div class="stat-lbl">Active Signatures</div></div>
+      </div>
+      <div class="intel-grid">
+        <div class="intel-card"><div class="intel-title">Top Targeted Brands</div><div id="brand-list"></div></div>
+        <div class="intel-card"><div class="intel-title">Attack Vectors</div><div id="vector-list"></div></div>
+        <div class="intel-card"><div class="intel-title">Top Phishing TLDs</div><div id="tld-list"></div></div>
+        <div class="intel-card"><div class="intel-title">Recent IOCs</div><div id="ioc-list"></div></div>
+      </div>
+    </section>
+ 
+    <!-- ━━━ SETTINGS ━━━ -->
+    <section id="page-settings" class="page">
+      <div class="phead">
+        <div><h1>Settings</h1><p>Configure detection rules, thresholds and notifications</p></div>
+      </div>
+      <div class="settings-grid">
+        <div>
+          <div class="settings-sec-label">Detection Engine</div>
+          <div class="settings-block">
+            <div class="s-row"><div><div class="s-name">ML Model Detection</div><div class="s-desc">Heuristic analysis via trained classifier</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Domain Reputation Check</div><div class="s-desc">Cross-reference against threat intel feeds</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">SSL Certificate Validation</div><div class="s-desc">Verify CA, expiry, and mismatch</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">URL Shortener Expansion</div><div class="s-desc">Resolve and analyse shortened URLs</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Keyword Analysis</div><div class="s-desc">Detect phishing keywords in URL paths</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">IP Geolocation Check</div><div class="s-desc">Flag high-risk hosting jurisdictions</div></div><label class="toggle"><input type="checkbox"><span class="tslider"></span></label></div>
+          </div>
+        </div>
+        <div>
+          <div class="settings-sec-label">Alerts &amp; Notifications</div>
+          <div class="settings-block">
+            <div class="s-row"><div><div class="s-name">Real-time Alerts</div><div class="s-desc">Push notifications for high-risk detections</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Email Daily Digest</div><div class="s-desc">Summary report sent every morning</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Slack Integration</div><div class="s-desc">Post critical alerts to Slack channel</div></div><label class="toggle"><input type="checkbox"><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Webhook / SIEM</div><div class="s-desc">Custom webhook for SIEM integration</div></div><label class="toggle"><input type="checkbox"><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Auto-block High Risk</div><div class="s-desc">Automatically block URLs scoring 90+</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+            <div class="s-row"><div><div class="s-name">Threat Feed Auto-Sync</div><div class="s-desc">Refresh intelligence every 5 minutes</div></div><label class="toggle"><input type="checkbox" checked><span class="tslider"></span></label></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="settings-sec-label">Risk Thresholds</div>
+        <div class="settings-block">
+          <div class="s-row">
+            <div><div class="s-name">High Risk Threshold</div><div class="s-desc">Scores at or above this are flagged as phishing</div></div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" min="50" max="99" value="75" style="width:130px" oninput="document.getElementById('t-high').textContent=this.value">
+              <span id="t-high" style="font-family:var(--mono);color:var(--red);min-width:22px;font-size:13px">75</span>
+            </div>
+          </div>
+          <div class="s-row">
+            <div><div class="s-name">Medium Risk Threshold</div><div class="s-desc">Scores at or above this are flagged as suspicious</div></div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" min="20" max="74" value="45" style="width:130px" oninput="document.getElementById('t-med').textContent=this.value">
+              <span id="t-med" style="font-family:var(--mono);color:var(--orange);min-width:22px;font-size:13px">45</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+  </main>
+</div>
+ 
+<!-- ═══ MODAL ═══ -->
+<div id="overlay" onclick="if(event.target===this)closeModal()">
+  <div id="modal">
+    <div class="modal-head">
+      <h3>URL Analysis Detail</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+ 
+<!-- ═══ TOAST ═══ -->
+<div id="toast"></div> 
+</body>
+<script src="./Project.js"></script>
+</html>
